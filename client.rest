@@ -5,7 +5,7 @@
 GET {{baseUrl}}/
 
 ### ConceitosManualController
-GET {{baseUrl}}/conceitos-manual/ 
+GET {{baseUrl}}/conceitos-manual/home 
 
 ### ConceitosAutomaticoController
 GET {{baseUrl}}/conceitos-automatico/
