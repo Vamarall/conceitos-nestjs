@@ -12,6 +12,14 @@ Content-Type: application/json
 {
     "recado": "Novo recado"
 }
+###
+PATCH {{baseUrl}}/recados/1
+Content-Type: application/json
+
+{
+    "recado": "Recado atualizado"
+}
+
 
 
 
