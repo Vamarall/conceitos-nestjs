@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { log } from 'console';
 
 @Controller('recados')
@@ -28,5 +28,10 @@ export class RecadosController {
             id,
             ...body
         }
+    }
+
+    @Delete(':id')
+    delete(@Param('id') id : string){
+        return `Esse metodo deleta o recado com id ${id}`;
     }
 }

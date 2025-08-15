@@ -19,6 +19,8 @@ Content-Type: application/json
 {
     "recado": "Recado atualizado"
 }
+###
+DELETE {{baseUrl}}/recados/1
 
 
 
