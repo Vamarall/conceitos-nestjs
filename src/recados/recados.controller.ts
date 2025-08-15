@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { log } from 'console';
 
 @Controller('recados')
@@ -14,5 +14,10 @@ export class RecadosController {
     @Get(':id')
     findOne(@Param('id') id: string) {
         return `Esse metodo retorna o recado com id ${id}`;
+    }
+
+    @Post()
+    create(@Body() body : any){
+        return body;
     }
 }
