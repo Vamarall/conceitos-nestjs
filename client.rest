@@ -2,7 +2,9 @@
 
 #RECADOS
 ###
-GET {{baseUrl}}/recados
+GET {{baseUrl}}/recados/
+?limit=10
+&offset=10
 ### 
 GET {{baseUrl}}/recados/1/
 ###
@@ -21,16 +23,3 @@ Content-Type: application/json
 }
 ###
 DELETE {{baseUrl}}/recados/1
-
-
-
-
-### AppControllerGetHello
-# @name AppControllerGetHello
-GET {{baseUrl}}/
-
-### ConceitosManualController
-GET {{baseUrl}}/conceitos-manual/home 
-
-### ConceitosAutomaticoController
-GET {{baseUrl}}/conceitos-automatico/

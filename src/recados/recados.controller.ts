@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { log } from 'console';
 
 @Controller('recados')
@@ -6,8 +6,9 @@ export class RecadosController {
 
     // Método para buscar todos os recados
     @Get()
-    findAll() {
-        return 'Esse metodo retorna todos os recados';
+    findAll(@Query() pagination : any) {
+        const {limit = 10 , offset = 0} = pagination;
+        return `Esse metodo retorna todos os recados. limite=${limit} e offset=${offset}`;
     }
 
     // Método para buscar um recado
