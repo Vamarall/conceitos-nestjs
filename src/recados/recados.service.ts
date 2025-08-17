@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
 import { RecadoEntity } from "./entities/recado.entity";
 
 @Injectable()
@@ -22,7 +22,11 @@ export class RecadoService {
 
     // Método para buscar um recado
     findOne(id: string) {
-        return this.recados.find(recado => recado.id == id) || null;
+        const recado = this.recados.find(recado => recado.id == id) || null;
+
+        if (recado) return recado;
+
+        throw new NotFoundException(`Recado com ID ${id} não encontrado!`);
     }
 
     create(body: any) {
@@ -39,8 +43,8 @@ export class RecadoService {
     update(id: string, body: any) {
         const recado = this.findOne(id);
         if (!recado) {
-            return null;
-        }else{
+            throw new NotFoundException(`Recado com ID ${id} não encontrado!`);
+        } else {
             Object.assign(recado, body);
         }
 
@@ -52,11 +56,11 @@ export class RecadoService {
 
     delete(id: string) {
         const recado = this.findOne(id);
-        if (recado) {
+        if (!recado) {
+            throw new NotFoundException(`Recado com ID ${id} não encontrado!`);
+        } else {
             this.recados.splice(this.recados.indexOf(recado), 1);
         }
-        return {
-            message: `Recado ${id} excluído com sucesso!`
-        };
+        return recado;
     }
 }
