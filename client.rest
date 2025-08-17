@@ -23,10 +23,7 @@ Content-Type: application/json
 {
     "text": "Recado atualizado 2",
     "de": "João 2",
-    "para": "Cesar 2",
-    "lido": false,
-    "data": "2023-10-01T10:00:00.000Z",
-    "recado": "Recado atualizado 2"
+    "para": "Cesar 2"
 }
 ###
 DELETE {{baseUrl}}/recados/3
