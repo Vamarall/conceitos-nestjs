@@ -6,7 +6,7 @@ GET {{baseUrl}}/recados/
 ?limit=10
 &offset=10
 ### 
-GET {{baseUrl}}/recados/3/
+GET {{baseUrl}}/recados//
 ###
 POST {{baseUrl}}/recados
 Content-Type: application/json
