@@ -1,38 +1,43 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
-import { log } from 'console';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
+import { RecadoService } from './recados.service';
 
 @Controller('recados')
 export class RecadosController {
+  // Método para buscar todos os recados
 
-    // Método para buscar todos os recados
-    @Get()
-    findAll(@Query() pagination : any) {
-        const {limit = 10 , offset = 0} = pagination;
-        return `Esse metodo retorna todos os recados. limite=${limit} e offset=${offset}`;
-    }
+  constructor(private readonly service: RecadoService) {}
+  @Get()
+  findAll(@Query() pagination: any) {
+    return this.service.findAll(pagination);
+  }
 
-    // Método para buscar um recado
-    @Get(':id')
-    findOne(@Param('id') id: string) {
-        return `Esse metodo retorna o recado com id ${id}`;
-    }
+  // Método para buscar um recado
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.service.findOne(id);
+  }
 
-    @Post()
-    create(@Body() body: any) {
-        return body;
-    }
+  @Post()
+  create(@Body() body: any) {
+    return this.service.create(body);
+  }
 
-    @Patch(':id')
-    update(@Param('id') id: string, @Body() body: any) {
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() body: any) {
+    return this.service.update(id, body);
+  }
 
-        return {
-            id,
-            ...body
-        }
-    }
-
-    @Delete(':id')
-    delete(@Param('id') id : string){
-        return `Esse metodo deleta o recado com id ${id}`;
-    }
+  @Delete(':id')
+  delete(@Param('id') id: string) {
+    return this.service.delete(id);
+  }
 }

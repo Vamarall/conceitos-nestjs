@@ -4,6 +4,6 @@ import { ConceitosManualService } from './conceitos-manual.service';
 
 @Module({
   controllers: [ConceitosManualController],
-  providers: [ConceitosManualService]
+  providers: [ConceitosManualService],
 })
 export class ConceitoManualModule {}

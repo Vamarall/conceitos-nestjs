@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
 import { RecadosController } from './recados.controller';
+import { RecadoService } from './recados.service';
 
 @Module({
-  controllers: [RecadosController]
+  controllers: [RecadosController],
+  providers: [RecadoService]
 })
 export class RecadosModule {}
