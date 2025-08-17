@@ -6,13 +6,15 @@ GET {{baseUrl}}/recados/
 ?limit=10
 &offset=10
 ### 
-GET {{baseUrl}}/recados/5/
+GET {{baseUrl}}/recados/3/
 ###
 POST {{baseUrl}}/recados
 Content-Type: application/json
 
 {
-    "recado": "Novo recado"
+    "text": "Recado 3",
+    "de": "João Forte 2",
+    "para": "Maria Fina"
 }
 ###
 PATCH {{baseUrl}}/recados/3
