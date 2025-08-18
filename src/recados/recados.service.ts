@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, HttpException, HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
 import { RecadoEntity } from "./entities/recado.entity";
 import { CreateRecadoDto } from "./dto/create-recado.dto";
 import { UpdateReacadoDto } from "./dto/update-recado.dto";
@@ -18,7 +18,7 @@ export class RecadoService {
     }
 
     // Método para buscar um recado
-    async findOne(id: string) {
+    async findOne(id: number) {
         const recado = await this.recadoRepository.findOne({
             where: { id: id }
         })
@@ -38,11 +38,20 @@ export class RecadoService {
         return this.recadoRepository.save(recado)
     }
 
-    update(id: string, UpdateReacadoDto: UpdateReacadoDto) {
+    async update(idParam: number | string, dto: UpdateReacadoDto) {
+        const id = Number(idParam);
+        if (!Number.isInteger(id)) throw new BadRequestException('ID inválido');
+      
+        const recado = await this.recadoRepository.findOne({ where: { id } });
+        if (!recado) throw new NotFoundException(`Recado com ID ${id} não encontrado!`);
+      
+        this.recadoRepository.merge(recado, dto);
+        return this.recadoRepository.save(recado);
+      }
+      
+      
 
-    }
-
-    async delete(id: string) {
+    async delete(id: number) {
         const recado = await this.recadoRepository.findOne({
             where: { id: id }
         })

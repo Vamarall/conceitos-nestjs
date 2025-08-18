@@ -17,13 +17,13 @@ Content-Type: application/json
     "para": "Maria Fina"
 }
 ###
-PATCH {{baseUrl}}/recados/2
+PATCH {{baseUrl}}/recados/7/
 Content-Type: application/json
 
 {
-    "text": "Recado atualizado 2",
+    "text": "Recado atualizado 3",
     "de": "João 2",
     "para": "Cesar 2"
 }
 ###
-DELETE {{baseUrl}}/recados/4
+DELETE {{baseUrl}}/recados/5

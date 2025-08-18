@@ -24,7 +24,7 @@ export class RecadosController {
 
   // Método para buscar um recado
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: number) {
     return this.service.findOne(id);
   }
 
@@ -34,12 +34,12 @@ export class RecadosController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() recadoDto: UpdateReacadoDto) {
+  update(@Param('id') id: number, @Body() recadoDto: UpdateReacadoDto) {
     return this.service.update(id, recadoDto);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: string) {
+  delete(@Param('id') id: number) {
     return this.service.delete(id);
   }
 }
