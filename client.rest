@@ -6,7 +6,7 @@ GET {{baseUrl}}/recados/
 ?limit=10
 &offset=10
 ### 
-GET {{baseUrl}}/recados//
+GET {{baseUrl}}/recados/1/
 ###
 POST {{baseUrl}}/recados
 Content-Type: application/json
@@ -26,4 +26,4 @@ Content-Type: application/json
     "para": "Cesar 2"
 }
 ###
-DELETE {{baseUrl}}/recados/3
+DELETE {{baseUrl}}/recados/4

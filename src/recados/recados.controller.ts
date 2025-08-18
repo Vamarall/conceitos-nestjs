@@ -19,7 +19,7 @@ export class RecadosController {
   constructor(private readonly service: RecadoService) {}
   @Get()
   findAll(@Query() pagination: any) {
-    return this.service.findAll(pagination);
+    return this.service.findAll();
   }
 
   // Método para buscar um recado
