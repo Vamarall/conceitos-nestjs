@@ -14,6 +14,8 @@ export class RecadoService {
             para: 'Maria',
             lido: false,
             data: new Date('2023-10-01T10:00:00Z'),
+            createdAt: new Date('2023-10-01T09:00:00Z'),
+            updatedAt: new Date('2023-10-01T09:30:00Z'),
         }
     ]
     // Método para buscar todos os recados
@@ -34,11 +36,13 @@ export class RecadoService {
     create(recadoDto: CreateRecadoDto) {
         this.lastId++;
         const id = this.lastId.toString();
-        const newRecado = {
+        const newRecado: RecadoEntity = {
             id,
             ...recadoDto,
             lido: false,
             data: new Date(),
+            createdAt: new Date(),
+            updatedAt: new Date(),
         }
         this.recados.push(newRecado);
         return newRecado;
