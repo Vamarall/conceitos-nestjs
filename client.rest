@@ -13,8 +13,8 @@ Content-Type: application/json
 
 {
     "text": "Recado 3",
-    "de": "João Forte 2",
-    "para": "Maria Fina"
+    "deId": 4,
+    "paraId": 11
 }
 ###
 PATCH {{baseUrl}}/recados/7/
