@@ -5,6 +5,7 @@ import { UpdateReacadoDto } from "./dto/update-recado.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { PessoaService } from "src/pessoa/pessoa.service";
+import { PaginationDto } from "src/commun/dto/pagination.dto";
 
 @Injectable()
 export class RecadoService {
@@ -14,8 +15,11 @@ export class RecadoService {
         private readonly pessoaService: PessoaService
     ) { }
     // Método para buscar todos os recados
-    async findAll() {
+    async findAll(paginationDto?: PaginationDto) {
+        const { limit = 10, offset = 1 } = paginationDto || {};
         const recados = await this.recadoRepository.find({
+            take: limit, // quantos registros vao ser exibidos (por pagina)
+            skip: offset, // quantos registros devem ser pulados
             relations: ['de', 'para'],
             select: {
                 de: {

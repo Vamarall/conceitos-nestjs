@@ -4,7 +4,7 @@
 ###
 GET {{baseUrl}}/recados/
 ?limit=10
-&offset=10
+&offset=2
 ### 
 GET {{baseUrl}}/recados/10/
 ###

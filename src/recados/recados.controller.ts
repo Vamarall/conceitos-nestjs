@@ -11,6 +11,7 @@ import {
 import { RecadoService } from './recados.service';
 import { CreateRecadoDto } from './dto/create-recado.dto';
 import { UpdateReacadoDto } from './dto/update-recado.dto';
+import { PaginationDto } from 'src/commun/dto/pagination.dto';
 
 @Controller('recados')
 export class RecadosController {
@@ -18,8 +19,9 @@ export class RecadosController {
 
   constructor(private readonly service: RecadoService) {}
   @Get()
-  findAll(@Query() pagination: any) {
-    return this.service.findAll();
+  findAll(@Query() paginationDto: PaginationDto) {
+    const recados = this.service.findAll(paginationDto);
+    return recados;
   }
 
   // Método para buscar um recado
