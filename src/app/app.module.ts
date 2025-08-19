@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { RecadosModule } from 'src/recados/recados.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { PessoaModule } from 'src/pessoa/pessoa.module';
 
 // A partir daqui (imports: []), você pode importar outros módulos necessários para o seu aplicativo.
 @Module({
@@ -17,7 +18,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     synchronize: true, // Atenção: não usar em produção, pois pode apagar dados!
   }),
 
-    RecadosModule],
+    RecadosModule,
+    PessoaModule],
   controllers: [AppController],
   providers: [AppService],
 })
