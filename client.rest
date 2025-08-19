@@ -13,7 +13,7 @@ Content-Type: application/json
 
 {
     "text": "Recado 3",
-    "deId": 4,
+    "deId": 12,
     "paraId": 11
 }
 ###
@@ -26,7 +26,7 @@ Content-Type: application/json
     "para": "Cesar 2"
 }
 ###
-DELETE {{baseUrl}}/recados/5
+DELETE {{baseUrl}}/recados/8
 
 
 
@@ -59,4 +59,4 @@ Content-Type: application/json
     "nome": "Usuário Teste 2"
 }
 ###
-DELETE {{baseUrl}}/pessoa/9
+DELETE {{baseUrl}}/pessoa/4
