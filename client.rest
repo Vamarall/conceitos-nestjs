@@ -6,7 +6,7 @@ GET {{baseUrl}}/recados/
 ?limit=10
 &offset=10
 ### 
-GET {{baseUrl}}/recados/1/
+GET {{baseUrl}}/recados/10/
 ###
 POST {{baseUrl}}/recados
 Content-Type: application/json
@@ -17,13 +17,12 @@ Content-Type: application/json
     "paraId": 11
 }
 ###
-PATCH {{baseUrl}}/recados/7/
+PATCH {{baseUrl}}/recados/10/
 Content-Type: application/json
 
 {
-    "text": "Recado atualizado 3",
-    "de": "João 2",
-    "para": "Cesar 2"
+    "text": "Teste ALOU",
+    "lido": true
 }
 ###
 DELETE {{baseUrl}}/recados/8

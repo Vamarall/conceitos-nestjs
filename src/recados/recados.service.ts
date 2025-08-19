@@ -35,7 +35,18 @@ export class RecadoService {
     // Método para buscar um recado
     async findOne(id: number) {
         const recado = await this.recadoRepository.findOne({
-            where: { id: id }
+            where: { id: id },
+            relations: ['de', 'para'],
+            select: {
+                de: {
+                    id: true,
+                    nome: true
+                },
+                para: {
+                    id: true,
+                    nome: true
+                }
+            }
         })
         if (recado) return recado;
 
@@ -75,11 +86,14 @@ export class RecadoService {
         const id = Number(idParam);
         if (!Number.isInteger(id)) throw new BadRequestException('ID inválido');
 
-        const recado = await this.recadoRepository.findOne({ where: { id } });
-        if (!recado) throw new NotFoundException(`Recado com ID ${id} não encontrado!`);
+        const recado = await this.findOne(id);
+
+        recado.text = dto?.text ?? recado.text
+        recado.lido = dto?.lido ?? recado.lido
 
         this.recadoRepository.merge(recado, dto);
-        return this.recadoRepository.save(recado);
+        await this.recadoRepository.save(recado);
+        return recado
     }
 
 
