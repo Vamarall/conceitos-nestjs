@@ -27,3 +27,36 @@ Content-Type: application/json
 }
 ###
 DELETE {{baseUrl}}/recados/5
+
+
+
+
+#PESSOAS 
+###
+GET {{baseUrl}}/pessoa/
+?limit=10
+&offset=10
+### 
+GET {{baseUrl}}/pessoa/1/
+###
+POST {{baseUrl}}/pessoa
+Content-Type: application/json
+
+{
+  "email": "usuario235@example.com",
+  "password": "minhaSenha123",
+   "nome": "Usuário Teste"
+}
+
+
+###
+PATCH {{baseUrl}}/pessoa/10/
+Content-Type: application/json
+
+{
+    "email": "novo235@example.com",
+    "password": "minhaSenhaNova",
+    "nome": "Usuário Teste 2"
+}
+###
+DELETE {{baseUrl}}/pessoa/9

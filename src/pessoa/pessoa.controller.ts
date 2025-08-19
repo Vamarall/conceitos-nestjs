@@ -9,7 +9,7 @@ export class PessoaController {
 
   @Post()
   create(@Body() createPessoaDto: CreatePessoaDto) {
-    return this.pessoaService.create(createPessoaDto);
+    const pessoa = this.pessoaService.create(createPessoaDto);
   }
 
   @Get()
