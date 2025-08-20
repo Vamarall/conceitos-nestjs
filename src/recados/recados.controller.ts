@@ -17,7 +17,6 @@ import { PaginationDto } from 'src/commun/dto/pagination.dto';
 import { ParseIntIdPipe } from 'src/commun/pipes/parse-int-id.pipe';
 
 @Controller('recados')
-@UsePipes(ParseIntIdPipe)
 export class RecadosController {
   // Método para buscar todos os recados
 
