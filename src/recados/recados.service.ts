@@ -86,11 +86,8 @@ export class RecadoService {
         };
     }
 
-    async update(idParam: number | string, dto: UpdateReacadoDto) {
-        const id = Number(idParam);
-        if (!Number.isInteger(id)) throw new BadRequestException('ID inválido');
-
-        const recado = await this.findOne(id);
+    async update(idParam: number, dto: UpdateReacadoDto) {
+        const recado = await this.findOne(idParam);
 
         recado.text = dto?.text ?? recado.text
         recado.lido = dto?.lido ?? recado.lido

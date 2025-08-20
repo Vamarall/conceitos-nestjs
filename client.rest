@@ -4,15 +4,15 @@
 ###
 GET {{baseUrl}}/recados/
 ?limit=10
-&offset=2
+&offset=0
 ### 
-GET {{baseUrl}}/recados/10/
+GET {{baseUrl}}/recados/11/
 ###
 POST {{baseUrl}}/recados
 Content-Type: application/json
 
 {
-    "text": "Recado 3",
+    "text": "Recado 21",
     "deId": 12,
     "paraId": 11
 }

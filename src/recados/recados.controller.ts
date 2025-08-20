@@ -4,16 +4,20 @@ import {
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
   Query,
+  UsePipes,
 } from '@nestjs/common';
 import { RecadoService } from './recados.service';
 import { CreateRecadoDto } from './dto/create-recado.dto';
 import { UpdateReacadoDto } from './dto/update-recado.dto';
 import { PaginationDto } from 'src/commun/dto/pagination.dto';
+import { ParseIntIdPipe } from 'src/commun/pipes/parse-int-id.pipe';
 
 @Controller('recados')
+@UsePipes(ParseIntIdPipe)
 export class RecadosController {
   // Método para buscar todos os recados
 
@@ -27,6 +31,7 @@ export class RecadosController {
   // Método para buscar um recado
   @Get(':id')
   findOne(@Param('id') id: number) {
+    console.log(id, typeof id)
     return this.service.findOne(id);
   }
 
