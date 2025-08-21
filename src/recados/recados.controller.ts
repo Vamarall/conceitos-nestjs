@@ -17,6 +17,7 @@ import { UpdateReacadoDto } from './dto/update-recado.dto';
 import { PaginationDto } from 'src/commun/dto/pagination.dto';
 import { ParseIntIdPipe } from 'src/commun/pipes/parse-int-id.pipe';
 import { AddHeaderInterceptor } from 'src/commun/interceptors/add-header.interceptor';
+import { TimingConnectionInterceptor } from 'src/commun/interceptors/timing-connection.interceptor';
 
 @Controller('recados')
 export class RecadosController {
@@ -32,8 +33,9 @@ export class RecadosController {
 
   // Método para buscar um recado
   @Get(':id')
+  @UseInterceptors(TimingConnectionInterceptor)
   findOne(@Param('id') id: number) {
-    console.log(id, typeof id)
+    console.log('Recados findOne controller executado')
     return this.service.findOne(id);
   }
 
