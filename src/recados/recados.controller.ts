@@ -18,7 +18,9 @@ import { PaginationDto } from 'src/commun/dto/pagination.dto';
 import { ParseIntIdPipe } from 'src/commun/pipes/parse-int-id.pipe';
 import { AddHeaderInterceptor } from 'src/commun/interceptors/add-header.interceptor';
 import { TimingConnectionInterceptor } from 'src/commun/interceptors/timing-connection.interceptor';
+import { AuthTokenInterceptor } from 'src/commun/interceptors/auth-token.interceptor';
 
+@UseInterceptors(AuthTokenInterceptor)
 @Controller('recados')
 export class RecadosController {
   // Método para buscar todos os recados
