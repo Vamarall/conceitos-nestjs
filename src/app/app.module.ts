@@ -1,9 +1,10 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { RecadosModule } from 'src/recados/recados.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PessoaModule } from 'src/pessoa/pessoa.module';
+import { SimpleMiddlaware } from 'src/commun/middlawares/simple.middlaware';
 
 // A partir daqui (imports: []), você pode importar outros módulos necessários para o seu aplicativo.
 @Module({
@@ -23,4 +24,14 @@ import { PessoaModule } from 'src/pessoa/pessoa.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(SimpleMiddlaware).forRoutes({
+      path: '*',
+      method: RequestMethod.ALL
+
+    });
+  }
+   
+
+}

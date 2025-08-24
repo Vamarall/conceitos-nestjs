@@ -8,6 +8,7 @@ import {
   Patch,
   Post,
   Query,
+  Req,
   UseInterceptors,
   UsePipes,
 } from '@nestjs/common';
@@ -28,7 +29,8 @@ export class RecadosController {
   constructor(private readonly service: RecadoService) {}
   @Get()
   @UseInterceptors(AddHeaderInterceptor)
-  findAll(@Query() paginationDto: PaginationDto) {
+  findAll(@Query() paginationDto: PaginationDto, @Req() req: Request) {
+    console.log('RecadosController: ', req['user'])
     const recados = this.service.findAll(paginationDto);
     return recados;
   }
