@@ -33,13 +33,14 @@ export class RecadoService {
             }
 
         });
+
         return recados;
     }
 
     // Método para buscar um recado
     async findOne(id: number) {
         console.log('Recados findOne service executado')
-        
+
         const recado = await this.recadoRepository.findOne({
             where: { id: id },
             relations: ['de', 'para'],
