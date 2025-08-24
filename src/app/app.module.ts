@@ -5,6 +5,9 @@ import { RecadosModule } from 'src/recados/recados.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PessoaModule } from 'src/pessoa/pessoa.module';
 import { SimpleMiddlaware } from 'src/commun/middlawares/simple.middlaware';
+import { APP_FILTER, APP_GUARD } from '@nestjs/core';
+import { MyExceptionFilter } from 'src/commun/filters/my-exception.filter';
+import { AdminGuard } from 'src/commun/guards/admin-guard';
 
 // A partir daqui (imports: []), você pode importar outros módulos necessários para o seu aplicativo.
 @Module({
@@ -22,7 +25,16 @@ import { SimpleMiddlaware } from 'src/commun/middlawares/simple.middlaware';
     RecadosModule,
     PessoaModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService,
+    {
+      provide: APP_FILTER,
+      useClass: MyExceptionFilter
+    },
+    {
+      provide: APP_GUARD,
+      useClass: AdminGuard
+    }
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
@@ -32,6 +44,6 @@ export class AppModule implements NestModule {
 
     });
   }
-   
+
 
 }
