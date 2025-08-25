@@ -20,6 +20,7 @@ import { ParseIntIdPipe } from 'src/commun/pipes/parse-int-id.pipe';
 import { AddHeaderInterceptor } from 'src/commun/interceptors/add-header.interceptor';
 import { TimingConnectionInterceptor } from 'src/commun/interceptors/timing-connection.interceptor';
 import { AuthTokenInterceptor } from 'src/commun/interceptors/auth-token.interceptor';
+import { UrlParam } from 'src/commun/params/url-param.decorator';
 
 @UseInterceptors(AuthTokenInterceptor)
 @Controller('recados')
@@ -29,8 +30,9 @@ export class RecadosController {
   constructor(private readonly service: RecadoService) {}
   @Get()
   @UseInterceptors(AddHeaderInterceptor)
-  findAll(@Query() paginationDto: PaginationDto, @Req() req: Request) {
+  findAll(@Query() paginationDto: PaginationDto, @Req() req: Request, @UrlParam() url : string) {
     console.log('RecadosController: ', req['user'])
+    console.log(url)
     const recados = this.service.findAll(paginationDto);
     return recados;
   }
