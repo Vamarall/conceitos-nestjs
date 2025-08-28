@@ -8,20 +8,25 @@ import { SimpleMiddlaware } from 'src/commun/middlawares/simple.middlaware';
 import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { MyExceptionFilter } from 'src/commun/filters/my-exception.filter';
 import { AdminGuard } from 'src/commun/guards/admin-guard';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 // A partir daqui (imports: []), você pode importar outros módulos necessários para o seu aplicativo.
 @Module({
-  imports: [TypeOrmModule.forRoot({
-    type: 'postgres', // Tipo de banco de dados
-    host: 'localhost', // Endereço do servidor de banco de dados
-    port: 5432, // Porta do servidor de banco de dados
-    username: '', // Usuário do banco de dados
-    database: 'postgres', // Nome do banco de dados
-    password: '261217', // Senha do banco de dados
-    autoLoadEntities: true, // Carrega automaticamente as entidades registradas
-    synchronize: true, // Atenção: não usar em produção, pois pode apagar dados!
-  }),
-
+  imports: [ ConfigModule.forRoot({ isGlobal: true }), // carrega .env
+    TypeOrmModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (cfg: ConfigService) => ({
+        type: 'postgres',
+        host: cfg.get<string>('DB_HOST', '127.0.0.1'),
+        port: cfg.get<number>('DB_PORT', 5433),
+        username: cfg.get<string>('DB_USER', 'personal'),
+        password: cfg.get<string>('DB_PASS'),
+        database: cfg.get<string>('DB_NAME', 'personal_db'), // <- ESSENCIAL
+        autoLoadEntities: true,
+        synchronize: true,
+        logging: false
+      }),
+    }),
     RecadosModule,
     PessoaModule],
   controllers: [AppController],

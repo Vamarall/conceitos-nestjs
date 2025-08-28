@@ -7,15 +7,15 @@ GET {{baseUrl}}/recados/
 &offset=0
 Authorization: Bearer 123456
 ### 
-GET {{baseUrl}}/recados/11/
+GET {{baseUrl}}/recados/1/
 ###
 POST {{baseUrl}}/recados/
 Content-Type: application/json
 
 {
-    "text": "Recado 21",
-    "deId": 12,
-    "paraId": 11
+    "text": "Cruzeiro ganhou ontem de 2 x 0",
+    "deId": 3,
+    "paraId":1
 }
 ###
 PATCH {{baseUrl}}/recados/10/
@@ -43,14 +43,14 @@ POST {{baseUrl}}/pessoa
 Content-Type: application/json
 
 {
-  "email": "usuario235@example.com",
+  "email": "fredsion@example.com",
   "password": "minhaSenha123",
    "nome": "Usuário Teste"
 }
 
 
 ###
-PATCH {{baseUrl}}/pessoa/10/
+PATCH {{baseUrl}}/pessoa/1/
 Content-Type: application/json
 
 {
@@ -59,4 +59,4 @@ Content-Type: application/json
     "nome": "Usuário Teste 2"
 }
 ###
-DELETE {{baseUrl}}/pessoa/4
+DELETE {{baseUrl}}/pessoa/2

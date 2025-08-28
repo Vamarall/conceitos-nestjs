@@ -8,9 +8,10 @@ export class AuthTokenInterceptor implements NestInterceptor{
         const token = request.headers.authorization?.split(' ')[1];
 
         //CHECAR O TOKEN
-        if(!token || token !== '123456'){
+       /* if(!token || token !== '123456'){
             throw new UnauthorizedException('Usuario nao logado');
         }
+            */
 
         console.log('Seu token: ', token)
         return next.handle()

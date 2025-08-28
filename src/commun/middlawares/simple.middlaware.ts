@@ -4,13 +4,6 @@
 import { NestMiddleware } from "@nestjs/common";
 import { Request, Response } from "express";
 
-/**
- * Middleware "cru" (nível Express) que roda ANTES do pipeline do Nest (guards, pipes, etc.).
- * Útil para logging básico, CORS, parse de headers e anexar metadados ao `req`.
- *
- * Obs.: Neste ponto, filtros de exceção do Nest NÃO capturam erros daqui.
- * Se você passar um erro para `next(err)`, quem trata é o stack do Express/Fastify.
- */
 export class SimpleMiddlaware implements NestMiddleware {
   /**
    * Método obrigatório do `NestMiddleware`.
