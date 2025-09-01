@@ -5,22 +5,24 @@ import { UpdatePessoaDto } from './dto/update-pessoa.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Pessoa } from './entities/pessoa.entity';
+import { HashingService } from 'src/auth/hashing/hashing.service';
 
 @Injectable()
 export class PessoaService {
 
   constructor(
     @InjectRepository(Pessoa)
-    private readonly repo: Repository<Pessoa>
+    private readonly repo: Repository<Pessoa>,
+    private readonly hashingService: HashingService
   ) { }
 
   async create(createPessoaDto: CreatePessoaDto) {
     try {
-      const passwordHash = await bcrypt.hash(createPessoaDto.password, 10);
+      const passwordHash = await this.hashingService.hash(createPessoaDto.password)
       const pessoa = {
         ...createPessoaDto,
         createdAt: new Date(),
-        passwordHash
+        passwordHash: passwordHash
       }
 
       const novaPessoa = this.repo.create()

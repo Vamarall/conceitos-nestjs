@@ -9,6 +9,7 @@ import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { MyExceptionFilter } from 'src/commun/filters/my-exception.filter';
 import { AdminGuard } from 'src/commun/guards/admin-guard';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { AuthModule } from 'src/auth/auth.module';
 
 // A partir daqui (imports: []), você pode importar outros módulos necessários para o seu aplicativo.
 @Module({
@@ -28,7 +29,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       }),
     }),
     RecadosModule,
-    PessoaModule],
+    PessoaModule,
+    AuthModule
+  ],
   controllers: [AppController],
   providers: [AppService,
     {
