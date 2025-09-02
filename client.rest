@@ -42,11 +42,10 @@ GET {{baseUrl}}/pessoa/1/
 POST {{baseUrl}}/pessoa
 Content-Type: application/json
 
-
 {
-  "email": "fredsion@example.com",
-  "password": "minhaSenha123",
-   "nome": "Usuário Teste"
+  "email": "emaildovictor@gmail.com",
+  "password": "senhadovictor",
+   "nome": "victor"
 }
 
 
@@ -60,7 +59,7 @@ Content-Type: application/json
 
 }
 ###
-DELETE {{baseUrl}}/pessoa/2
+DELETE {{baseUrl}}/pessoa/4
 
 
 #AUTH
@@ -69,7 +68,7 @@ POST {{baseUrl}}/auth/
 Content-Type: application/json
 
 {
-    "email": "emaildovictor@gmail.com",
+    "email": "emaildovictor@email.com",
     "password": "senhadovictor"
 }
 
