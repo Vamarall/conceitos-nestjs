@@ -42,6 +42,7 @@ GET {{baseUrl}}/pessoa/1/
 POST {{baseUrl}}/pessoa
 Content-Type: application/json
 
+
 {
   "email": "fredsion@example.com",
   "password": "minhaSenha123",
@@ -54,9 +55,21 @@ PATCH {{baseUrl}}/pessoa/1/
 Content-Type: application/json
 
 {
-    "email": "novo235@example.com",
-    "password": "minhaSenhaNova",
-    "nome": "Usuário Teste 2"
+    "nome": "alef",
+    "password": "minhaSenhaNova2"
+
 }
 ###
 DELETE {{baseUrl}}/pessoa/2
+
+
+#AUTH
+###
+POST {{baseUrl}}/auth/
+Content-Type: application/json
+
+{
+    "email": "emaildovictor@gmail.com",
+    "password": "senhadovictor"
+}
+

@@ -61,6 +61,13 @@ export class PessoaService {
     if (!pessoa) {
       throw new NotFoundException(`Pessoa com ID ${id} não encontrado!`);
     }
+    // Se vier "password", gera o hash e grava diretamente no entity carregado
+    if (updatePessoaDto?.password) {
+      const hash = await this.hashingService.hash(updatePessoaDto.password);
+      pessoa.passwordHash = hash;  // aplica o novo hash
+      delete (updatePessoaDto as any).password;
+    }
+
     this.repo.merge(pessoa, updatePessoaDto);
     return this.repo.save(pessoa);
   }
