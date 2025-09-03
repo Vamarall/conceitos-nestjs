@@ -7,13 +7,15 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { Pessoa } from "src/pessoa/entities/pessoa.entity";
 import { ConfigModule } from "@nestjs/config";
 import jwtConfig from "./config/jwt.config";
-import { JwtModule } from "@nestjs/jwt";
+import { JwtModule, JwtService } from "@nestjs/jwt";
 
 @Global()
 @Module({
-    imports: [TypeOrmModule.forFeature([Pessoa]),
-    ConfigModule.forFeature(jwtConfig),
-    JwtModule.registerAsync(jwtConfig.asProvider())],
+    imports: [
+        TypeOrmModule.forFeature([Pessoa]),          // disponibiliza o repositório de Pessoa
+        ConfigModule.forFeature(jwtConfig),          // registra as configs "jwt" (injeta via jwtConfig.KEY)
+        JwtModule.registerAsync(jwtConfig.asProvider()), // ⚠ usa a config no JwtModule de forma abreviada;
+    ],
     controllers: [AuthController],
     providers: [
         {
@@ -23,7 +25,9 @@ import { JwtModule } from "@nestjs/jwt";
         AuthService
     ],
     exports: [
-        HashingService
+        HashingService,
+        JwtModule,
+        ConfigModule
     ]
 })
 export class AuthModule { }

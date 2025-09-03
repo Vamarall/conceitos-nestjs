@@ -42,19 +42,19 @@ export class AuthService {
             throw new UnauthorizedException("Email ou senha inválidos");
         }
 
+        // Gera o JWT
         const accessToken = await this.jwtService.signAsync(
             {
-                sub: pessoa?.id,
-                email: pessoa?.email
+                sub: pessoa?.id,      // "subject" do token (id do usuário)
+                email: pessoa?.email, // claim extra (útil no cliente/logs)
             },
             {
-                audience: this.jwtConfiguration.audience,
-                issuer: this.jwtConfiguration.issuer,
-                secret: this.jwtConfiguration.secret,
-                expiresIn: this.jwtConfiguration.jwtTtl
-
+                audience: this.jwtConfiguration.audience, // valida "aud"
+                issuer: this.jwtConfiguration.issuer,     // valida "iss"
+                secret: this.jwtConfiguration.secret,     // chave de assinatura
+                expiresIn: this.jwtConfiguration.jwtTtl,  // TTL do token
             }
-        )
+        );
 
         // ✅ NUNCA retorne o DTO original (ele contém a senha em claro).
         // Retorne dados sanitizados ou gere tokens (JWT / refresh) aqui.

@@ -13,7 +13,7 @@ POST {{baseUrl}}/recados/
 Content-Type: application/json
 
 {
-    "text": "Cruzeiro ganhou ontem de 2 x 0",
+    "text": "Cruzeiro vai ganhar a CB",
     "deId": 3,
     "paraId":1
 }
@@ -34,8 +34,7 @@ DELETE {{baseUrl}}/recados/8
 #PESSOAS 
 ###
 GET {{baseUrl}}/pessoa/
-?limit=10
-&offset=10
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoiZW1haWxkb3ZpY3RvckBlbWFpbC5jb20iLCJpYXQiOjE3NTY5MjA0NTMsImV4cCI6MTc1NjkyNDA1MywiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDozMDAwIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDozMDAwIn0.8CB2CyABlQvl1RbIZPHPuiocUsT75aHX1TYYIF__tgU
 ### 
 GET {{baseUrl}}/pessoa/1/
 ###
