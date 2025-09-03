@@ -1,11 +1,12 @@
 @baseUrl = http://localhost:3000
+@authToken = {{authenticate.response.body.accessToken}}
 
 #RECADOS
 ###
 GET {{baseUrl}}/recados/
 ?limit=10
 &offset=0
-Authorization: Bearer 123456
+Authorization: Bearer {{authToken}}
 ### 
 GET {{baseUrl}}/recados/1/
 ###
@@ -34,7 +35,7 @@ DELETE {{baseUrl}}/recados/8
 #PESSOAS 
 ###
 GET {{baseUrl}}/pessoa/
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoiZW1haWxkb3ZpY3RvckBlbWFpbC5jb20iLCJpYXQiOjE3NTY5MjA0NTMsImV4cCI6MTc1NjkyNDA1MywiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDozMDAwIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDozMDAwIn0.8CB2CyABlQvl1RbIZPHPuiocUsT75aHX1TYYIF__tgU
+Authorization: bearer {{authToken}}
 ### 
 GET {{baseUrl}}/pessoa/1/
 ###
@@ -62,7 +63,9 @@ DELETE {{baseUrl}}/pessoa/4
 
 
 #AUTH
-###
+### Autenticacao
+# @name authenticate
+
 POST {{baseUrl}}/auth/
 Content-Type: application/json
 
