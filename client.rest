@@ -12,22 +12,24 @@ GET {{baseUrl}}/recados/1/
 ###
 POST {{baseUrl}}/recados/
 Content-Type: application/json
+Authorization: Bearer {{authToken}}
 
 {
-    "text": "Cruzeiro vai ganhar a CB",
-    "deId": 3,
+    "text": "Cruzeiro vai ganhar a CB e brasileirao",
     "paraId":1
 }
 ###
-PATCH {{baseUrl}}/recados/10/
+PATCH {{baseUrl}}/recados/2/
 Content-Type: application/json
+Authorization: Bearer {{authToken}}
 
 {
     "text": "Teste ALOU",
     "lido": true
 }
 ###
-DELETE {{baseUrl}}/recados/8
+DELETE {{baseUrl}}/recados/2
+Authorization: Bearer {{authToken}}
 
 
 
@@ -43,23 +45,25 @@ POST {{baseUrl}}/pessoa
 Content-Type: application/json
 
 {
-  "email": "emaildovictor@gmail.com",
+  "email": "wallef@gmail.com",
   "password": "senhadovictor",
-   "nome": "victor"
+   "nome": "drive"
 }
 
 
 ###
-PATCH {{baseUrl}}/pessoa/1/
+PATCH {{baseUrl}}/pessoa/3/
 Content-Type: application/json
+Authorization: bearer {{authToken}}
 
 {
-    "nome": "alef",
+    "nome": "wallef",
     "password": "minhaSenhaNova2"
 
 }
 ###
-DELETE {{baseUrl}}/pessoa/4
+DELETE {{baseUrl}}/pessoa/1
+Authorization: bearer {{authToken}}
 
 
 #AUTH
@@ -70,7 +74,7 @@ POST {{baseUrl}}/auth/
 Content-Type: application/json
 
 {
-    "email": "emaildovictor@email.com",
+    "email": "wallef@gmail.com",
     "password": "senhadovictor"
 }
 

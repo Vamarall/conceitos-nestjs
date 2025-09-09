@@ -1,4 +1,4 @@
-import { BadRequestException, ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ConflictException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { CreatePessoaDto } from './dto/create-pessoa.dto';
 import { UpdatePessoaDto } from './dto/update-pessoa.dto';
@@ -54,7 +54,7 @@ export class PessoaService {
     throw new NotFoundException(`Pessoa com ID ${id} não encontrado!`);
   }
 
-  async update(id: number, updatePessoaDto: UpdatePessoaDto, tokenPayload : TokenPayloadDto) {
+  async update(id: number, updatePessoaDto: UpdatePessoaDto, tokenPayload: TokenPayloadDto) {
     const pessoa = await this.repo.findOne({
       where: { id: id }
     })
@@ -70,16 +70,24 @@ export class PessoaService {
     }
 
     this.repo.merge(pessoa, updatePessoaDto);
+    if (pessoa.id !== tokenPayload.sub) {
+      throw new ForbiddenException('Voce nao pode alterar outra pessoa!');
+    }
+
     return this.repo.save(pessoa);
   }
 
-  async remove(id: number, tokenPayload : TokenPayloadDto) {
+  async remove(id: number, tokenPayload: TokenPayloadDto) {
     const pessoa = await this.repo.findOne({
       where: { id: id }
     })
 
     if (!pessoa) {
       throw new NotFoundException(`Pessoa com ID ${id} não encontrado!`);
+    }
+
+    if (pessoa.id !== tokenPayload.sub) {
+      throw new ForbiddenException('Voce nao pode deletar outra pessoa!');
     }
 
     return this.repo.remove(pessoa)

@@ -1,4 +1,4 @@
-import { BadRequestException, HttpException, HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, ForbiddenException, HttpException, HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
 import { RecadoEntity } from "./entities/recado.entity";
 import { CreateRecadoDto } from "./dto/create-recado.dto";
 import { UpdateReacadoDto } from "./dto/update-recado.dto";
@@ -6,6 +6,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { PessoaService } from "src/pessoa/pessoa.service";
 import { PaginationDto } from "src/commun/dto/pagination.dto";
+import { TokenPayloadDto } from "src/auth/dto/token.payload.dto";
 
 @Injectable()
 export class RecadoService {
@@ -60,11 +61,11 @@ export class RecadoService {
         throw new NotFoundException(`Recado com ID ${id} não encontrado!`);
     }
 
-    async create(recadoDto: CreateRecadoDto) {
-        const { deId, paraId } = recadoDto;
+    async create(recadoDto: CreateRecadoDto, tokenPayload: TokenPayloadDto) {
+        const { paraId } = recadoDto;
 
-        // Encontrar a pessoa que esta mandando o recado
-        const de = await this.pessoaService.findOne(deId)
+        // Encontrar a pessoa que esta mandando o recado (tokenPayload.sub)
+        const de = await this.pessoaService.findOne(tokenPayload.sub)
         // Encontrar a pessoa que esta recebendo o recado
         const para = await this.pessoaService.findOne(paraId)
 
@@ -89,8 +90,12 @@ export class RecadoService {
         };
     }
 
-    async update(idParam: number, dto: UpdateReacadoDto) {
+    async update(idParam: number, dto: UpdateReacadoDto, tokenPayload: TokenPayloadDto) {
         const recado = await this.findOne(idParam);
+
+        if (recado.de.id !== tokenPayload.sub) {
+            throw new ForbiddenException('Você não tem permissão para alterar este recado');
+        }
 
         recado.text = dto?.text ?? recado.text
         recado.lido = dto?.lido ?? recado.lido
@@ -102,12 +107,12 @@ export class RecadoService {
 
 
 
-    async delete(id: number) {
-        const recado = await this.recadoRepository.findOne({
-            where: { id: id }
-        })
-        if (!recado) {
-            throw new NotFoundException(`Recado com ID ${id} não encontrado!`);
+    async delete(id: number, tokenPayload: TokenPayloadDto) {
+        const recado = await this.findOne(id);
+
+
+        if (recado.de.id !== tokenPayload.sub) {
+            throw new ForbiddenException('Você não tem permissão para alterar este recado');
         }
         return this.recadoRepository.remove(recado);
     }

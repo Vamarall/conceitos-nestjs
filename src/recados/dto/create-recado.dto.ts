@@ -7,8 +7,6 @@ export class CreateRecadoDto {
     @MaxLength(100)
     readonly text: string;
 
-    @IsPositive()
-    deId: number;
 
     @IsPositive()
     paraId: number;

@@ -50,6 +50,7 @@ export class AuthTokenGuard implements CanActivate {
              */
             const payload = await this.jwtService.verifyAsync(token, this.jwtConfiguration);
 
+            // Anexa o payload decodificado ao request para uso posterior (ex.: em controllers).
             request[REQUEST_TOKEN_PAYLOAD_KEY] = payload;
 
 

@@ -9,6 +9,7 @@ import {
   Post,
   Query,
   Req,
+  UseGuards,
   UseInterceptors,
   UsePipes,
 } from '@nestjs/common';
@@ -21,16 +22,19 @@ import { AddHeaderInterceptor } from 'src/commun/interceptors/add-header.interce
 import { TimingConnectionInterceptor } from 'src/commun/interceptors/timing-connection.interceptor';
 import { AuthTokenInterceptor } from 'src/commun/interceptors/auth-token.interceptor';
 import { UrlParam } from 'src/commun/params/url-param.decorator';
+import { AuthTokenGuard } from 'src/auth/guards/auth-token-guard';
+import { TokenPayLoadParam } from 'src/auth/params/token-payload-params';
+import { TokenPayloadDto } from 'src/auth/dto/token.payload.dto';
 
 @UseInterceptors(AuthTokenInterceptor)
 @Controller('recados')
 export class RecadosController {
   // Método para buscar todos os recados
 
-  constructor(private readonly service: RecadoService) {}
+  constructor(private readonly service: RecadoService) { }
   @Get()
   @UseInterceptors(AddHeaderInterceptor)
-  findAll(@Query() paginationDto: PaginationDto, @Req() req: Request, @UrlParam() url : string) {
+  findAll(@Query() paginationDto: PaginationDto, @Req() req: Request, @UrlParam() url: string) {
     console.log('RecadosController: ', req['user'])
     console.log(url)
     const recados = this.service.findAll(paginationDto);
@@ -45,18 +49,21 @@ export class RecadosController {
     return this.service.findOne(id);
   }
 
+  @UseGuards(AuthTokenGuard)
   @Post()
-  create(@Body() recadoDto: CreateRecadoDto) {
-    return this.service.create(recadoDto);
+  create(@Body() recadoDto: CreateRecadoDto, @TokenPayLoadParam() tokenPayload : TokenPayloadDto) {
+    return this.service.create(recadoDto, tokenPayload);
   }
 
+  @UseGuards(AuthTokenGuard)
   @Patch(':id')
-  update(@Param('id') id: number, @Body() recadoDto: UpdateReacadoDto) {
-    return this.service.update(id, recadoDto);
+  update(@Param('id') id: number, @Body() recadoDto: UpdateReacadoDto, @TokenPayLoadParam() tokenPayload : TokenPayloadDto ) {
+    return this.service.update(id, recadoDto, tokenPayload);
   }
 
+  @UseGuards(AuthTokenGuard)
   @Delete(':id')
-  delete(@Param('id') id: number) {
-    return this.service.delete(id);
+  delete(@Param('id') id: number, @TokenPayLoadParam() tokenPayload : TokenPayloadDto) {
+    return this.service.delete(id, tokenPayload);
   }
 }
