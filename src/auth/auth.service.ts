@@ -7,6 +7,7 @@ import { HashingService } from "./hashing/hashing.service";
 import type { ConfigType } from "@nestjs/config";
 import jwtConfig from "./config/jwt.config";
 import { JwtService } from "@nestjs/jwt";
+import { RefreshTokenDto } from "./dto/refresh-token.dto";
 
 @Injectable()
 export class AuthService {
@@ -38,29 +39,64 @@ export class AuthService {
             : false;
 
         // ❌ Não revele se foi email ou senha que falhou (evita enumeração de usuários)
-        if (!isPasswordValid) {
+        if (!isPasswordValid || !pessoa) {
             throw new UnauthorizedException("Email ou senha inválidos");
         }
 
-        // Gera o JWT
-        const accessToken = await this.jwtService.signAsync(
+        // ✅ Autenticação bem-sucedida, crie e retorne os tokens
+        return this.createTokens(pessoa);
+    }
+
+
+    async refreshTokens(refreshDto: RefreshTokenDto) {
+        try {
+            const { sub } = await this.jwtService.verifyAsync(
+                refreshDto.refreshToken,
+                this.jwtConfiguration
+            );
+
+            const pessoa = await this.pessoaRepository.findOneBy({ id: sub });
+
+            if (!pessoa) {
+                throw new Error('Pessoa encontrada')
+            }
+
+        } catch (e) {
+            throw new UnauthorizedException(e.message);
+        }
+
+    }
+
+    // Gera um JWT assinado
+    private async generateAccessToken<T>(sub?: number, expiresIn?: number, payload?: T) {
+        return await this.jwtService.signAsync(
             {
-                sub: pessoa?.id,      // "subject" do token (id do usuário)
-                email: pessoa?.email, // claim extra (útil no cliente/logs)
+                sub,
+                ...payload
             },
             {
                 audience: this.jwtConfiguration.audience, // valida "aud"
-                issuer: this.jwtConfiguration.issuer,     // valida "iss"
-                secret: this.jwtConfiguration.secret,     // chave de assinatura
-                expiresIn: this.jwtConfiguration.jwtTtl,  // TTL do token
+                issuer: this.jwtConfiguration.issuer, // valida "iss"
+                secret: this.jwtConfiguration.secret, // chave de assinatura
+                expiresIn,
             }
         );
-
-        // ✅ NUNCA retorne o DTO original (ele contém a senha em claro).
-        // Retorne dados sanitizados ou gere tokens (JWT / refresh) aqui.
-        return {
-            accessToken
-        };
     }
 
+    // Gera access e refresh tokens
+    private async createTokens(pessoa: Pessoa) {
+
+        const accessToken = await this.
+            generateAccessToken<Partial<Pessoa>>(pessoa?.id, this.jwtConfiguration.jwtTtl, { email: pessoa?.email });
+
+        const refreshToken = await this.
+            generateAccessToken(pessoa.id, this.jwtConfiguration.jwtRefreshTtl);
+
+
+        return {
+            accessToken,
+            refreshToken
+        };
+
+    }
 }

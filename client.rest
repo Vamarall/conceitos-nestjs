@@ -1,80 +1,91 @@
 @baseUrl = http://localhost:3000
 @authToken = {{authenticate.response.body.accessToken}}
+@refreshToken = {{authenticate.response.body.refreshToken}}
 
-#RECADOS
+# RECADOS
 ###
-GET {{baseUrl}}/recados/
-?limit=10
-&offset=0
+GET {{baseUrl}}/recados/?limit=10&offset=0
 Authorization: Bearer {{authToken}}
-### 
+
+###
 GET {{baseUrl}}/recados/1/
+Authorization: Bearer {{authToken}}
+
 ###
 POST {{baseUrl}}/recados/
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
-    "text": "Cruzeiro vai ganhar a CB e brasileirao",
-    "paraId":1
+  "text": "Cruzeiro vai ganhar a CB e brasileirao",
+  "paraId": 1
 }
+
 ###
 PATCH {{baseUrl}}/recados/2/
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
-    "text": "Teste ALOU",
-    "lido": true
+  "text": "Teste ALOU",
+  "lido": true
 }
+
 ###
 DELETE {{baseUrl}}/recados/2
 Authorization: Bearer {{authToken}}
 
-
-
-
-#PESSOAS 
+# PESSOAS
 ###
 GET {{baseUrl}}/pessoa/
-Authorization: bearer {{authToken}}
-### 
+Authorization: Bearer {{authToken}}
+
+###
 GET {{baseUrl}}/pessoa/1/
+Authorization: Bearer {{authToken}}
+
 ###
 POST {{baseUrl}}/pessoa
 Content-Type: application/json
+Authorization: Bearer {{authToken}}
 
 {
   "email": "wallef@gmail.com",
   "password": "senhadovictor",
-   "nome": "drive"
+  "nome": "drive"
 }
-
 
 ###
 PATCH {{baseUrl}}/pessoa/3/
 Content-Type: application/json
-Authorization: bearer {{authToken}}
+Authorization: Bearer {{authToken}}
 
 {
-    "nome": "wallef",
-    "password": "minhaSenhaNova2"
-
+  "nome": "wallef",
+  "password": "minhaSenhaNova2"
 }
+
 ###
 DELETE {{baseUrl}}/pessoa/1
-Authorization: bearer {{authToken}}
+Authorization: Bearer {{authToken}}
 
-
-#AUTH
+# AUTH
 ### Autenticacao
 # @name authenticate
-
 POST {{baseUrl}}/auth/
 Content-Type: application/json
 
 {
-    "email": "wallef@gmail.com",
-    "password": "senhadovictor"
+  "email": "wallef@gmail.com",
+  "password": "senhadovictor"
 }
 
+###
+# Refresh Token
+# @name reAuthenticate
+POST {{baseUrl}}/auth/refresh
+Content-Type: application/json
+
+{
+  "refreshToken": "{{refreshToken}}"
+}
